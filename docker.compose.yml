@@ -1,0 +1,7 @@
+---
+services:
+  pdf_merger:
+    build: .
+    image: ghcr.io/m4s-b3n/rest-test:latest
+    ports:
+      - "8080:8080"

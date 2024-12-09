@@ -1,3 +1,9 @@
+# Dev
+dev/
+
+# Tests
+reports/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
