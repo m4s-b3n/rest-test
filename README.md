@@ -1,9 +1,10 @@
 # REST Test Service
 
-This is a simple Python REST API service built using Flask. It provides two endpoints:
+This is a simple Python REST API service built using Flask. It provides three endpoints:
 
 - `/health`: Returns a 200 status code whenever the service is running.
-- `/custom-health`: Returns a 200 status code if the environment variable `CUSTOM_HEALTH` is not set or set to `true`, and a 500 status code otherwise.
+- `/custom-health`: Returns a 200 status code if the internal variable `custom_health_status` is `True`, and a 500 status code otherwise.
+- `/toggle-health`: Toggles the internal variable `custom_health_status` between `True` and `False`.
 
 Simply run the service using Docker:
 
@@ -25,16 +26,10 @@ You can run and test the service using `curl` commands:
    curl -X GET http://localhost:8080/custom-health
    ```
 
-3. **Change the result of the `/custom-health` endpoint**:
-
-   You can also change the result of the `/custom-health` endpoint by setting the `CUSTOM_HEALTH` environment variable:
+3. **Toggle the result using the `/toggle-health` endpoint**:
 
    ```sh
-   docker run -p 8080:8080 -e CUSTOM_HEALTH=false ghcr.io/m4s-b3n/rest-test:1.0.0
-   ```
-
-   ```sh
-   curl -X GET http://localhost:8080/custom-health
+   curl -X POST http://localhost:8080/toggle-health
    ```
 
 ## Endpoints
@@ -44,8 +39,13 @@ You can run and test the service using `curl` commands:
   - Returns: `{"status": "running"}` with a 200 status code.
 
 - **GET /custom-health**
-  - Returns: `{"status": "custom health is good"}` with a 200 status code if `CUSTOM_HEALTH` is not set or set to `true`.
-  - Returns: `{"status": "custom health is bad"}` with a 500 status code if `CUSTOM_HEALTH` is set to `false`.
+
+  - Returns: `{"status": "custom health is good"}` with a 200 status code if `custom_health_status` is `True`.
+  - Returns: `{"status": "custom health is bad"}` with a 500 status code if `custom_health_status` is `False`.
+
+- **POST /toggle-health**
+  - Toggles the internal variable `custom_health_status` between `True` and `False`.
+  - Returns: `{"status": "custom health toggled"}` with a 200 status code.
 
 ## Running Locally
 
