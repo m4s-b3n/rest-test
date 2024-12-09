@@ -9,7 +9,7 @@ This is a simple Python REST API service built using Flask. It provides three en
 Simply run the service using Docker:
 
 ```sh
-docker run -p 8080:8080 ghcr.io/m4s-b3n/rest-test:1.0.0
+docker run -p 8080:8080 ghcr.io/m4s-b3n/rest-test:1.1.0
 ```
 
 You can run and test the service using `curl` commands:

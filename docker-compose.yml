@@ -2,6 +2,6 @@
 services:
   app:
     build: .
-    image: ghcr.io/m4s-b3n/rest-test:1.0.0
+    image: ghcr.io/m4s-b3n/rest-test:1.1.0
     ports:
       - "8080:8080"
