@@ -8,7 +8,7 @@ This is a simple Python REST API service built using Flask. It provides two endp
 Simply run the service using Docker:
 
 ```sh
-docker run -p 8080:8080 ghcr.io/m4s-b3n/rest-test:latest
+docker run -p 8080:8080 ghcr.io/m4s-b3n/rest-test:1.0.0
 ```
 
 You can run and test the service using `curl` commands:
@@ -30,7 +30,7 @@ You can run and test the service using `curl` commands:
    You can also change the result of the `/custom-health` endpoint by setting the `CUSTOM_HEALTH` environment variable:
 
    ```sh
-   docker run -p 8080:8080 -e CUSTOM_HEALTH=false ghcr.io/m4s-b3n/rest-test:latest
+   docker run -p 8080:8080 -e CUSTOM_HEALTH=false ghcr.io/m4s-b3n/rest-test:1.0.0
    ```
 
    ```sh
