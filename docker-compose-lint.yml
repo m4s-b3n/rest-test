@@ -1,0 +1,41 @@
+---
+services:
+  lint:
+    image: ghcr.io/super-linter/super-linter:latest
+    volumes:
+      - .:/tmp/lint
+    environment:
+      - RUN_LOCAL=true
+      - DEFAULT_BRANCH=main
+      - FILTER_REGEX_EXCLUDE=CHANGELOG.md|(^|/)(.+/)*venv(/.+)*
+      - ENABLE_COMMITLINT_STRICT_MODE=true
+      - ENFORCE_COMMITLINT_CONFIGURATION_CHECK=true
+      - VALIDATE_PYTHON_ISORT=false
+
+  fix:
+    extends: lint
+    environment:
+      - FIX_HTML_PRETTIER=true
+      - FIX_JSON=true
+      - FIX_JSON_PRETTIER=true
+      - FIX_JSONC=true
+      - FIX_JSON_PRETTIER=true
+      - FIX_MARKDOWN_PRETTIER=true
+      - FIX_MARKDOWN=true
+      - FIX_PYTHON_BLACK=true
+      - FIX_PYTHON_PYINK=true
+      - FIX_PYTHON_RUFF=true
+      - FIX_SHELL_SHFMT=true
+      - FIX_YAML_PRETTIER=true
+
+  json-only:
+    image: ghcr.io/super-linter/super-linter:latest
+    volumes:
+      - .:/tmp/lint
+    environment:
+      - RUN_LOCAL=true
+      - DEFAULT_BRANCH=main
+      - VALIDATE_JSON=true
+      - VALIDATE_JSON_PRETTIER=true
+      - FIX_JSON=true
+      - FIX_JSON_PRETTIER=true
