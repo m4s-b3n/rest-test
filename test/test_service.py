@@ -1,6 +1,7 @@
 """Unit tests for the service endpoints."""
 
 import unittest
+from prometheus_client import REGISTRY, generate_latest
 from src.service import app, health_status
 
 
@@ -53,6 +54,27 @@ class ServiceTestCase(unittest.TestCase):
         self.assertTrue(health_status.get_status())
         health_status.toggle()
         self.assertFalse(health_status.get_status())
+
+    def test_metrics(self):
+        """Test the /metrics endpoint."""
+        response = self.app.get("/metrics")
+        self.assertEqual(response.status_code, 200)
+        metrics_data = generate_latest()
+        self.assertEqual(response.data, metrics_data)
+
+    def test_request_count_increments(self):
+        """Test that the request count increments with each request."""
+        initial_count = REGISTRY.get_sample_value("request_count_total") or 0
+
+        # Make a request to increment the count
+        self.app.get("/health")
+        new_count = REGISTRY.get_sample_value("request_count_total")
+        self.assertEqual(new_count, initial_count + 1)
+
+        # Make another request to increment the count again
+        self.app.get("/health")
+        new_count = REGISTRY.get_sample_value("request_count_total")
+        self.assertEqual(new_count, initial_count + 2)
 
 
 if __name__ == "__main__":

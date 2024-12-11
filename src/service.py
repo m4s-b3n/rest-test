@@ -1,6 +1,7 @@
 """Service module providing health check endpoints."""
 
 from flask import Flask, jsonify
+from prometheus_client import generate_latest, Counter
 
 app = Flask(__name__)
 
@@ -25,6 +26,31 @@ class HealthStatus:
 health_status = HealthStatus()
 
 
+class RequestCounter:
+    """Class to manage the request count."""
+
+    def __init__(self):
+        """Initialize the RequestCounter with a Prometheus counter."""
+        self.counter = Counter("request_count", "Total number of requests")
+
+    def increment(self):
+        """Increment the request count."""
+        self.counter.inc()
+
+    def get_metrics(self):
+        """Return the current Prometheus metrics."""
+        return generate_latest()
+
+
+request_counter = RequestCounter()
+
+
+@app.before_request
+def before_request():
+    """Increment the request count before each request."""
+    request_counter.increment()
+
+
 @app.route("/health", methods=["GET"])
 def health():
     """Return the health status of the service."""
@@ -47,6 +73,12 @@ def toggle_health():
         jsonify({"status": f"CUSTOM_HEALTH_STATUS set to {status}"}),
         200,
     )
+
+
+@app.route("/metrics", methods=["GET"])
+def metrics():
+    """Return Prometheus metrics."""
+    return request_counter.get_metrics(), 200
 
 
 if __name__ == "__main__":
