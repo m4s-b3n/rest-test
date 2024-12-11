@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/m4s-b3n/rest-test/compare/1.1.0...1.2.0) (2024-12-11)
+
+
+### Features
+
+* **#7:** add prometheus metrics endpoint ([#8](https://github.com/m4s-b3n/rest-test/issues/8)) ([8b6be11](https://github.com/m4s-b3n/rest-test/commit/8b6be1136a8026ebd56bedbba895e9ec777bd564)), closes [#7](https://github.com/m4s-b3n/rest-test/issues/7)
+
 # [1.1.0](https://github.com/m4s-b3n/rest-test/compare/1.0.0...1.1.0) (2024-12-09)
 
 
